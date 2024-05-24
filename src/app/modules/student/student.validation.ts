@@ -86,7 +86,6 @@ const studentValidationSchema = z.object({
     { message: 'localGuardian is required' },
   ),
   profileImg: z.string().optional().or(z.literal('')),
-  isActive: z.enum(['active', 'blocked']).default('active'),
   isDeleted: z.boolean().default(false),
 });
 
