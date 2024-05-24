@@ -5,11 +5,11 @@ import {
   getSingleStudent,
 } from './student.controller';
 
-const studentRouter = express.Router();
+const StudentRoutes = express.Router();
 
 // will call controller func
-studentRouter.get('/', getAllStudents);
-studentRouter.get('/:id', getSingleStudent);
-studentRouter.delete('/:id', deleteStudent);
+StudentRoutes.get('/', getAllStudents);
+StudentRoutes.get('/:id', getSingleStudent);
+StudentRoutes.delete('/:id', deleteStudent);
 
-export = studentRouter;
+export = StudentRoutes;

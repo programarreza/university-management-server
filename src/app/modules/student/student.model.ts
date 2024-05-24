@@ -59,6 +59,7 @@ const studentSchema = new Schema<TStudent>(
   {
     id: {
       type: String,
+      required: true,
     },
     user: {
       type: Schema.Types.ObjectId,
@@ -66,14 +67,14 @@ const studentSchema = new Schema<TStudent>(
       unique: true,
       ref: 'User',
     },
-    password: {
-      type: String,
-    },
     name: {
       type: userNameSchema,
+      required: true,
     },
     gender: {
       type: String,
+      enum: ['male', 'female', 'other'],
+      required: true,
     },
     dateOfBirth: { type: String },
     email: {
@@ -83,26 +84,32 @@ const studentSchema = new Schema<TStudent>(
     },
     contactNo: {
       type: String,
+      required: true,
     },
     emergencyContactNo: {
       type: String,
+      required: true,
     },
     bloodGroup: {
       type: String,
     },
     presentAddress: {
       type: String,
+      required: true,
     },
     permanentAddress: {
       type: String,
+      required: true,
     },
     guardian: {
       type: guardianSchema,
+      required: true,
     },
     localGuardian: {
       type: localGuardianSchema,
+      required: true,
     },
-    profileImg: { type: String },
+    profileImg: { type: String, required: true },
     isDeleted: {
       type: Boolean,
       default: false,
