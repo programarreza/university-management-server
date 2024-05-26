@@ -46,46 +46,51 @@ const localGuardianValidationSchema = z.object({
 });
 
 // Student Validation Schema
-const studentValidationSchema = z.object({
-  id: z.string().min(1, { message: 'id is required' }),
-  name: userNameValidationSchema.refine((data) => data !== undefined, {
-    message: 'name is required',
-  }),
-  gender: z.enum(['male', 'female', 'other'], {
-    errorMap: () => ({
-      message:
-        "gender is not valid. The gender field can only be one of the following: 'male', 'female', 'other'",
+const createStudentValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20),
+    student: z.object({
+      name: userNameValidationSchema.refine((data) => data !== undefined, {
+        message: 'name is required',
+      }),
+      gender: z.enum(['male', 'female', 'other'], {
+        errorMap: () => ({
+          message:
+            "gender is not valid. The gender field can only be one of the following: 'male', 'female', 'other'",
+        }),
+      }),
+      dateOfBirth: z.string().optional(),
+      email: z
+        .string()
+        .email({ message: 'email is not a valid email type' })
+        .min(1, { message: 'email is required' }),
+      contactNo: z.string().min(1, { message: 'contactNo is required' }),
+      emergencyContactNo: z
+        .string()
+        .min(1, { message: 'emergencyContactNo is required' }),
+      bloodGroup: z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .optional()
+        .refine((data) => data !== undefined, {
+          message:
+            "bloodGroup is not valid. The bloodGroup field can be one of the following: 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'",
+        }),
+      presentAddress: z
+        .string()
+        .min(1, { message: 'presentAddress is required' }),
+      permanentAddress: z
+        .string()
+        .min(1, { message: 'permanentAddress is required' }),
+      guardian: guardianValidationSchema.refine((data) => data !== undefined, {
+        message: 'guardian is required',
+      }),
+      localGuardian: localGuardianValidationSchema.refine(
+        (data) => data !== undefined,
+        { message: 'localGuardian is required' },
+      ),
+      profileImg: z.string().optional().or(z.literal('')),
     }),
   }),
-  dateOfBirth: z.string().optional(),
-  email: z
-    .string()
-    .email({ message: 'email is not a valid email type' })
-    .min(1, { message: 'email is required' }),
-  contactNo: z.string().min(1, { message: 'contactNo is required' }),
-  emergencyContactNo: z
-    .string()
-    .min(1, { message: 'emergencyContactNo is required' }),
-  bloodGroup: z
-    .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-    .optional()
-    .refine((data) => data !== undefined, {
-      message:
-        "bloodGroup is not valid. The bloodGroup field can be one of the following: 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'",
-    }),
-  presentAddress: z.string().min(1, { message: 'presentAddress is required' }),
-  permanentAddress: z
-    .string()
-    .min(1, { message: 'permanentAddress is required' }),
-  guardian: guardianValidationSchema.refine((data) => data !== undefined, {
-    message: 'guardian is required',
-  }),
-  localGuardian: localGuardianValidationSchema.refine(
-    (data) => data !== undefined,
-    { message: 'localGuardian is required' },
-  ),
-  profileImg: z.string().optional().or(z.literal('')),
-  isDeleted: z.boolean().default(false),
 });
 
-export default studentValidationSchema;
+export { createStudentValidationSchema };

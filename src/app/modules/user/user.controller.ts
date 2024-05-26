@@ -1,19 +1,11 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextFunction, Request, RequestHandler, Response } from 'express';
 import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { createStudentIntoDB } from './user.service';
-import { catchAsync } from '../../utils/catchAsync';
 
-// const catchAsync = (fn: RequestHandler) => {
-//   return (req: Request, res: Response, next: NextFunction) => {
-//     Promise.resolve(fn(req, res, next)).catch((err) => next(err));
-//   };
-// };
-
-const createStudent = catchAsync(async (req, res, next) => {
+const createStudent = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
+  
   // will cal service func to send this data
   const result = await createStudentIntoDB(password, studentData);
 
