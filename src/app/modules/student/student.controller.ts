@@ -1,69 +1,47 @@
-import { NextFunction, Request, Response } from 'express';
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { RequestHandler } from 'express';
+import httpStatus from 'http-status';
+import sendResponse from '../../utils/sendResponse';
 import {
   deleteStudentFromDB,
   getAllStudentsFromDB,
   getSingleStudentFromDB,
 } from './student.service';
-import sendResponse from '../../utils/sendResponse';
-import httpStatus from 'http-status';
+import { catchAsync } from '../../utils/catchAsync';
 
-const getAllStudents = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const result = await getAllStudentsFromDB();
-    // send response
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: 'Student is created successfully ',
-      data: result
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+const getAllStudents = catchAsync(async (req, res, next) => {
+  const result = await getAllStudentsFromDB();
 
-const getSingleStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const id = req.params.id;
-    const result = await getSingleStudentFromDB(id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Student is created successfully ',
+    data: result,
+  });
+});
 
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message:'Student is rendered successfully',
-      data: result
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+const getSingleStudent = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const result = await getSingleStudentFromDB(id);
 
-const deleteStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const id = req.params.id;
-    await deleteStudentFromDB(id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Student is rendered successfully',
+    data: result,
+  });
+});
 
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message:'Student is deleted successfully',
-    });
+const deleteStudent = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  await deleteStudentFromDB(id);
 
-  } catch (err) {
-    next(err);
-  }
-};
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Student is deleted successfully',
+  });
+});
 
 export { deleteStudent, getAllStudents, getSingleStudent };
