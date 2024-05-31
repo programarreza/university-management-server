@@ -57,6 +57,13 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent>(
   {
+
+id: {
+  type: String,
+  required: true,
+  unique: true
+}
+    ,
     user: {
       type: Schema.Types.ObjectId,
       required: [true, 'User id is required'],
@@ -69,7 +76,7 @@ const studentSchema = new Schema<TStudent>(
     },
     gender: {
       type: String,
-      enum: ['male', 'female', 'other']
+      enum: ['male', 'female', 'other'],
     },
     dateOfBirth: { type: String },
     email: {
@@ -105,6 +112,10 @@ const studentSchema = new Schema<TStudent>(
       required: true,
     },
     profileImg: { type: String, required: true },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
+    },
     isDeleted: {
       type: Boolean,
       default: false,

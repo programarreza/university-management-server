@@ -89,6 +89,7 @@ const createStudentValidationSchema = z.object({
         { message: 'localGuardian is required' },
       ),
       profileImg: z.string().optional().or(z.literal('')),
+      admissionSemester: z.string()
     }),
   }),
 });
