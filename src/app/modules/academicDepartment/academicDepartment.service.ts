@@ -9,7 +9,10 @@ const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
   });
 
   if (isDepartmentExist) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This department is already exist ');
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This department is already exist ',
+    );
   }
 
   const result = await AcademicDepartment.create(payload);
@@ -22,7 +25,8 @@ const getAllAcademicDepartmentsIntoDB = async () => {
 };
 
 const getSingleAcademicDepartmentIntoDB = async (id: string) => {
-  const result = await AcademicDepartment.findById(id).populate('academicFaculty');
+  const result =
+    await AcademicDepartment.findById(id).populate('academicFaculty');
   return result;
 };
 

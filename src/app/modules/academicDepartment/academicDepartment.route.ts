@@ -6,16 +6,13 @@ import {
   getSingleAcademicDepartment,
   updateAcademicDepartment,
 } from './academicDepartment.controller';
-import {
-  createAcademicDepartmentValidationSchema,
-  updateAcademicDepartmentValidationSchema,
-} from './academicDepartment.validation';
+import { updateAcademicDepartmentValidationSchema } from './academicDepartment.validation';
 
 const academicDepartmentRoutes = express.Router();
 
 academicDepartmentRoutes.post(
   '/create-academic-department',
-  validateRequest(createAcademicDepartmentValidationSchema),
+  // validateRequest(createAcademicDepartmentValidationSchema),
   createAcademicDepartment,
 );
 
