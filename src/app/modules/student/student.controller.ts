@@ -9,12 +9,14 @@ import {
 } from './student.service';
 
 const getAllStudents = catchAsync(async (req, res) => {
-  const result = await getAllStudentsFromDB();
+  console.log(req.query);
+
+  const result = await getAllStudentsFromDB(req.query);
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Student is created successfully ',
+    message: 'Students is rendered successfully ',
     data: result,
   });
 });
