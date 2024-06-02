@@ -1,7 +1,17 @@
+import AppError from '../../errors/AppError';
 import { TAcademicFaculty } from './academicFaculty.interface';
 import { AcademicFaculty } from './academicFaculty.model';
 
 const createAcademicFacultyIntoDB = async (payload: TAcademicFaculty) => {
+
+  const isFacultyExist = await AcademicFaculty.findOne({
+    name: payload.name,
+  });
+
+  if (isFacultyExist) {
+    throw new AppError(404, 'This faculty is already exist ');
+  }
+
   const result = await AcademicFaculty.create(payload);
   return result;
 };

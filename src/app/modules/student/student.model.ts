@@ -5,6 +5,8 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
+import AppError from '../../errors/AppError';
+import httpStatus from 'http-status';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -57,13 +59,11 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent>(
   {
-
-id: {
-  type: String,
-  required: true,
-  unique: true
-}
-    ,
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     user: {
       type: Schema.Types.ObjectId,
       required: [true, 'User id is required'],
@@ -116,6 +116,10 @@ id: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
     },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+    },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -123,5 +127,29 @@ id: {
   },
   { timestamps: true },
 );
+
+studentSchema.pre('save', async function (next) {
+
+  const isStudentExist = await Student.findOne({ email: this.email }); 
+  if (isStudentExist) {
+    throw new AppError(httpStatus.NOT_EXTENDED, 'Student Already Exist');
+  }
+
+  next()
+
+})
+
+studentSchema.pre('find', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+studentSchema.pre('findOne', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+
+
 
 export const Student = model('Student', studentSchema);

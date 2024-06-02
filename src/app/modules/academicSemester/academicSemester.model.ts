@@ -8,6 +8,7 @@ import {
   TAcademicSemester,
   TAcademicSemesterNameCodeMapper,
 } from './academicSemester.interface';
+import AppError from '../../errors/AppError';
 
 const academicSemesterSchema = new Schema<TAcademicSemester>(
   {
@@ -46,7 +47,7 @@ academicSemesterSchema.pre('save', async function (next) {
   });
 
   if (isSemesterExists) {
-    throw new Error('Semester is already exists !');
+    throw new AppError(404, 'Semester is already exists !');
   }
   next();
 });
@@ -61,7 +62,7 @@ academicSemesterSchema.pre('findOneAndUpdate', async function (next) {
     });
 
     if (isSemesterExists) {
-      throw new Error('Semester is already exists !');
+      throw new AppError(404, 'Semester is already exists !');
     }
   }
   next();
