@@ -1,7 +1,11 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { createFacultyIntoDB, createStudentIntoDB } from './user.service';
+import {
+  createAdminIntoDB,
+  createFacultyIntoDB,
+  createStudentIntoDB,
+} from './user.service';
 
 const createStudent = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
@@ -30,4 +34,17 @@ const createFaculty = catchAsync(async (req, res) => {
   });
 });
 
-export { createStudent, createFaculty };
+const createAdmin = catchAsync(async (req, res) => {
+  const { password, admin: adminData } = req.body;
+
+  const result = await createAdminIntoDB(password, adminData);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin is created successfully',
+    data: result,
+  });
+});
+
+export { createStudent, createFaculty, createAdmin };
