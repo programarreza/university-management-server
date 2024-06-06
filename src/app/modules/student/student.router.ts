@@ -12,8 +12,12 @@ const StudentRoutes = express.Router();
 
 // will call controller func
 StudentRoutes.get('/', getAllStudents);
-StudentRoutes.get('/:studentId', getSingleStudent);
-StudentRoutes.patch('/:studentId', validateRequest(updateStudentValidationSchema), updateStudent);
-StudentRoutes.delete('/:studentId', deleteStudent);
+StudentRoutes.get('/:id', getSingleStudent);
+StudentRoutes.patch(
+  '/:id',
+  validateRequest(updateStudentValidationSchema),
+  updateStudent,
+);
+StudentRoutes.delete('/:id', deleteStudent);
 
 export = StudentRoutes;
