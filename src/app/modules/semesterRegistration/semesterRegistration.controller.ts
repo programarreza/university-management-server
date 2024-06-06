@@ -6,6 +6,7 @@ import {
   createSemesterRegistrationIntoDB,
   getAllSemesterRegistrationsFromDB,
   getSingleSemesterRegistrationFromDB,
+  updateSemesterRegistrationIntoDB,
 } from './semesterRegistration.service';
 
 const createSemesterRegistration = catchAsync(
@@ -23,7 +24,7 @@ const createSemesterRegistration = catchAsync(
 
 const getAllSemesterRegistrations = catchAsync(
   async (req: Request, res: Response) => {
-    const result = await getAllSemesterRegistrationsFromDB();
+    const result = await getAllSemesterRegistrationsFromDB(req.query);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -51,12 +52,15 @@ const getSingleSemesterRegistration = catchAsync(
 
 const updateSemesterRegistration = catchAsync(
   async (req: Request, res: Response) => {
-    // const { id } = req.params;
+    const { id } = req.params;
+    
+    const result = await updateSemesterRegistrationIntoDB(id, req.body)
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'Semester Registration is updated successfully!',
+      data: result
     });
   },
 );
