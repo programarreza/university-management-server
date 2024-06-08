@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createOfferedCourse,
+  deleteOfferedCourse,
   getAllOfferedCourses,
   getSingleOfferedCourse,
   updateOfferedCourse,
@@ -27,5 +28,7 @@ offeredCourseRoutes.patch(
   validateRequest(updateOfferedCourseValidationSchema),
   updateOfferedCourse,
 );
+
+offeredCourseRoutes.delete('/:id', deleteOfferedCourse);
 
 export default offeredCourseRoutes;

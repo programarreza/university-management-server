@@ -3,6 +3,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import {
   createOfferedCourseIntoDB,
+  deleteOfferedCourseFromDB,
   getAllOfferedCoursesFromDB,
   getSingleOfferedCourseFromDB,
   updateOfferedCourseIntoDB,
@@ -41,6 +42,7 @@ const getSingleOfferedCourse = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const updateOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await updateOfferedCourseIntoDB(id, req.body);
@@ -53,9 +55,22 @@ const updateOfferedCourse = catchAsync(async (req, res) => {
   });
 });
 
+const deleteOfferedCourse = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  await deleteOfferedCourseFromDB(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Offered Course is deleted successfully ',
+    data: null,
+  });
+});
+
 export {
   createOfferedCourse,
   getAllOfferedCourses,
   getSingleOfferedCourse,
   updateOfferedCourse,
+  deleteOfferedCourse,
 };
