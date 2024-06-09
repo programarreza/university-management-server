@@ -4,6 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 import {
   createSemesterRegistrationIntoDB,
+  deleteSemesterRegistrationFromDB,
   getAllSemesterRegistrationsFromDB,
   getSingleSemesterRegistrationFromDB,
   updateSemesterRegistrationIntoDB,
@@ -53,14 +54,30 @@ const getSingleSemesterRegistration = catchAsync(
 const updateSemesterRegistration = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    
-    const result = await updateSemesterRegistrationIntoDB(id, req.body)
+
+    const result = await updateSemesterRegistrationIntoDB(id, req.body);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'Semester Registration is updated successfully!',
-      data: result
+      data: result,
+    });
+  },
+);
+
+const deleteSemesterRegistration = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const result = await deleteSemesterRegistrationFromDB(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message:
+        'Semester Registration and this upcoming offered course is deleted successfully!',
+      data: result,
     });
   },
 );
@@ -70,4 +87,5 @@ export {
   getAllSemesterRegistrations,
   getSingleSemesterRegistration,
   updateSemesterRegistration,
+  deleteSemesterRegistration,
 };

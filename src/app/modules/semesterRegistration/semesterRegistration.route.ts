@@ -6,6 +6,7 @@ import {
 } from './semesterRegistration.validation';
 import {
   createSemesterRegistration,
+  deleteSemesterRegistration,
   getAllSemesterRegistrations,
   getSingleSemesterRegistration,
   updateSemesterRegistration,
@@ -26,5 +27,6 @@ semesterRegistrationRoutes.patch(
   validateRequest(updateSemesterRegistrationValidationSchema),
   updateSemesterRegistration,
 );
+semesterRegistrationRoutes.delete('/:id', deleteSemesterRegistration);
 
 export default semesterRegistrationRoutes;
