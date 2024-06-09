@@ -7,10 +7,11 @@ import {
   getSingleFaculty,
   updateFaculty,
 } from './faculty.controller';
+import auth from '../../middlewares/auth';
 
 const FacultyRoutes = express.Router();
 
-FacultyRoutes.get('/', getAllFaculties);
+FacultyRoutes.get('/', auth(), getAllFaculties);
 FacultyRoutes.get('/:id', getSingleFaculty);
 
 FacultyRoutes.patch(

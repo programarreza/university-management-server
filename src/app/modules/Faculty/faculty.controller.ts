@@ -1,9 +1,15 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { deleteFacultyFromDB, getAllFacultiesFromDB, getSingleFacultyFromDB, updateFacultyIntoDB } from './faculty.service';
+import {
+  deleteFacultyFromDB,
+  getAllFacultiesFromDB,
+  getSingleFacultyFromDB,
+  updateFacultyIntoDB,
+} from './faculty.service';
 
 const getAllFaculties = catchAsync(async (req, res) => {
+  console.log('test', req.user);
   const result = await getAllFacultiesFromDB(req.query);
 
   sendResponse(res, {
