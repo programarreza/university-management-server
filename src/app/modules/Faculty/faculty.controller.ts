@@ -9,7 +9,7 @@ import {
 } from './faculty.service';
 
 const getAllFaculties = catchAsync(async (req, res) => {
-  console.log('test', req.user);
+  
   const result = await getAllFacultiesFromDB(req.query);
 
   sendResponse(res, {

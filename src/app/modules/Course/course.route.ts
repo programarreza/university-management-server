@@ -14,27 +14,32 @@ import {
   facultyWithCourseValidationSchema,
   updateCourseValidationSchema,
 } from './course.validation';
+import auth from '../../middlewares/auth';
 
 const courseRoutes = express.Router();
 
 courseRoutes.post(
   '/create-course',
+  auth('admin'),
   validateRequest(createCourseValidationSchema),
   createCourse,
 );
 
-courseRoutes.get('/', getAllCourses);
-courseRoutes.get('/:id', getSingleCourse);
-courseRoutes.delete('/:id', deleteCourse);
+courseRoutes.get('/', auth('student', 'faculty', 'admin'), getAllCourses);
+courseRoutes.get('/:id', auth('student', 'faculty', 'admin'), getSingleCourse);
 
 courseRoutes.patch(
   '/:id',
+  auth('admin'),
   validateRequest(updateCourseValidationSchema),
   updateCourse,
 );
 
+courseRoutes.delete('/:id', auth('admin'), deleteCourse);
+
 courseRoutes.put(
   '/:courseId/assign-faculties',
+  auth('admin'),
   validateRequest(facultyWithCourseValidationSchema),
   assignFacultyWithCourse,
 );

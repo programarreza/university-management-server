@@ -8,10 +8,15 @@ import {
   updateFaculty,
 } from './faculty.controller';
 import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../user/user.constant';
 
 const FacultyRoutes = express.Router();
 
-FacultyRoutes.get('/', auth(), getAllFaculties);
+FacultyRoutes.get(
+  '/',
+  auth(USER_ROLE.admin, USER_ROLE.faculty),
+  getAllFaculties,
+);
 FacultyRoutes.get('/:id', getSingleFaculty);
 
 FacultyRoutes.patch(
