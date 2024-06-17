@@ -5,12 +5,14 @@ import {
   forgetPasswordValidationSchema,
   loginValidationSchema,
   refreshTokenValidationSchema,
+  resetPasswordValidationSchema,
 } from './auth.validation';
 import {
   changePassword,
   forgetPassword,
   loginUser,
   refreshToken,
+  resetPassword,
 } from './auth.controller';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../user/user.constant';
@@ -36,6 +38,13 @@ authRoutes.post(
   '/forget-password',
   validateRequest(forgetPasswordValidationSchema),
   forgetPassword,
+);
+
+// reset password
+authRoutes.post(
+  '/reset-password',
+  validateRequest(resetPasswordValidationSchema),
+  resetPassword,
 );
 
 export default authRoutes;
