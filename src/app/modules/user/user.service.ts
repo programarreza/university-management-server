@@ -6,7 +6,11 @@ import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-import { generateAdminId, generateFacultyId, generateStudentId } from './user.utils';
+import {
+  generateAdminId,
+  generateFacultyId,
+  generateStudentId,
+} from './user.utils';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import { TFaculty } from '../Faculty/faculty.interface';
@@ -21,6 +25,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
   // set student role
   userData.role = 'student';
+  userData.email = payload?.email;
 
   // year semesterCode 4 digit number
   // find academic semester info
@@ -75,6 +80,7 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
   //set student role
   userData.role = 'faculty';
+  userData.email = payload?.email;
 
   // find academic department info
   const academicDepartment = await AcademicDepartment.findById(
@@ -122,7 +128,6 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
-
 const createAdminIntoDB = async (password: string, payload: TFaculty) => {
   // create a user object
   const userData: Partial<TUser> = {};
@@ -132,6 +137,7 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
 
   //set student role
   userData.role = 'admin';
+  userData.email = payload?.email;
 
   const session = await mongoose.startSession();
 
@@ -141,7 +147,7 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
     userData.id = await generateAdminId();
 
     // create a user (transaction-1)
-    const newUser = await User.create([userData], { session }); 
+    const newUser = await User.create([userData], { session });
 
     //create a admin
     if (!newUser.length) {
@@ -168,6 +174,5 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
     throw new Error(err);
   }
 };
-
 
 export { createStudentIntoDB, createFacultyIntoDB, createAdminIntoDB };
