@@ -40,6 +40,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
     },
     name: {
       type: userNameSchema,
+      trim: true,
       required: [true, 'Name is required'],
     },
     gender: {

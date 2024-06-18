@@ -40,6 +40,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
     },
     name: {
       type: userNameSchema,
+      trim: true,
       required: [true, 'Name is required'],
     },
     gender: {
