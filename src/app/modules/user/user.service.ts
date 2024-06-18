@@ -191,9 +191,18 @@ const getMeFromDB = async (userId: string, role: string) => {
   return result;
 };
 
+const changeStatusIntoDB = async (id: string, payload: { status: string }) => {
+  const result = await User.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  return result;
+};
+
 export {
   createAdminIntoDB,
   createFacultyIntoDB,
   createStudentIntoDB,
   getMeFromDB,
+  changeStatusIntoDB,
 };

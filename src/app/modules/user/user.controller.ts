@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import {
+  changeStatusIntoDB,
   createAdminIntoDB,
   createFacultyIntoDB,
   createStudentIntoDB,
@@ -61,4 +62,17 @@ const getMe = catchAsync(async (req, res) => {
   });
 });
 
-export { createAdmin, createFaculty, createStudent, getMe };
+const changeStatus = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await changeStatusIntoDB(id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Status is updated successfully',
+    data: result,
+  });
+});
+
+export { createAdmin, createFaculty, createStudent, getMe, changeStatus };
