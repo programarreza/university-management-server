@@ -7,12 +7,13 @@ import {
 } from './student.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import { updateStudentValidationSchema } from './student.validation';
+import auth from '../../middlewares/auth';
 
 const StudentRoutes = express.Router();
 
 // will call controller func
 StudentRoutes.get('/', getAllStudents);
-StudentRoutes.get('/:id', getSingleStudent);
+StudentRoutes.get('/:id', auth('admin', 'faculty'), getSingleStudent);
 StudentRoutes.patch(
   '/:id',
   validateRequest(updateStudentValidationSchema),

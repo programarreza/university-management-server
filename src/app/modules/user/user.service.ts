@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../config';
+import AppError from '../../errors/AppError';
+import { Admin } from '../Admin/admin.model';
+import { TFaculty } from '../Faculty/faculty.interface';
+import { Faculty } from '../Faculty/faculty.model';
+import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
@@ -11,12 +17,6 @@ import {
   generateFacultyId,
   generateStudentId,
 } from './user.utils';
-import AppError from '../../errors/AppError';
-import httpStatus from 'http-status';
-import { TFaculty } from '../Faculty/faculty.interface';
-import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
-import { Faculty } from '../Faculty/faculty.model';
-import { Admin } from '../Admin/admin.model';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   // if password is not given, use default password
@@ -175,4 +175,25 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
-export { createStudentIntoDB, createFacultyIntoDB, createAdminIntoDB };
+const getMeFromDB = async (userId: string, role: string) => {
+  let result = null;
+
+  if (role === 'student') {
+    result = await Student.findOne({ id: userId }).populate('user');
+  }
+  if (role === 'admin') {
+    result = await Admin.findOne({ id: userId }).populate('user');
+  }
+  if (role === 'faculty') {
+    result = await Faculty.findOne({ id: userId }).populate('user');
+  }
+
+  return result;
+};
+
+export {
+  createAdminIntoDB,
+  createFacultyIntoDB,
+  createStudentIntoDB,
+  getMeFromDB,
+};

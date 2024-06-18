@@ -1,5 +1,10 @@
 import express from 'express';
-import { createAdmin, createFaculty, createStudent } from './user.controller';
+import {
+  createAdmin,
+  createFaculty,
+  createStudent,
+  getMe,
+} from './user.controller';
 
 import validateRequest from '../../middlewares/validateRequest';
 import { createStudentValidationSchema } from '../student/student.validation';
@@ -29,5 +34,7 @@ UserRoutes.post(
   validateRequest(createAdminValidationSchema),
   createAdmin,
 );
+
+UserRoutes.get('/me', auth('student', 'faculty', 'admin'), getMe);
 
 export = UserRoutes;
