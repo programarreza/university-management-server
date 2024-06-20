@@ -14,10 +14,7 @@ import { createAdminValidationSchema } from '../Admin/admin.validation';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from './user.constant';
 import { changeStatusValidationSchema } from './user.validation';
-<<<<<<< HEAD
 import { upload } from '../../utils/sendImageToCloudinary';
-=======
->>>>>>> 30af55ea8a00c6f42757277f8e3da9dbe8a795d8
 
 const UserRoutes = express.Router();
 
