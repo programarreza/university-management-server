@@ -69,6 +69,7 @@ const enrolledCourseSchema = new Schema<TEnrolledCourse>(
     },
     courseMarks: {
       type: courseMarksSchema,
+      default: {},
     },
     grade: {
       type: String,
@@ -83,8 +84,8 @@ const enrolledCourseSchema = new Schema<TEnrolledCourse>(
     },
     isCompleted: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true },
 );
