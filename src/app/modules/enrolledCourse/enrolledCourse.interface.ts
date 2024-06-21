@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export type TGrade = 'A' | 'B' | 'C' | 'D' | 'F' | 'NA';
 
-export type TCoursesMarks = {
+export type TEnrolledCoursesMarks = {
   classTest1: number;
   midTerm: number;
   classTest2: number;
@@ -19,7 +19,7 @@ export type TEnrolledCourse = {
   student: Types.ObjectId;
   faculty: Types.ObjectId;
   isEnrolled: boolean;
-  courseMarks: TCoursesMarks;
+  courseMarks: TEnrolledCoursesMarks;
   grade: TGrade;
   gradePoints: number;
   isCompleted: boolean;

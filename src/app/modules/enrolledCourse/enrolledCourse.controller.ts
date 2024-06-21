@@ -1,7 +1,10 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { createEnrolledCourseIntoDB } from './enrolledCourse.service';
+import {
+  createEnrolledCourseIntoDB,
+  updateEnrolledCourseMarksIntoDB,
+} from './enrolledCourse.service';
 
 const createEnrolledCourse = catchAsync(async (req, res) => {
   const userId = req.user.userId;
@@ -15,4 +18,16 @@ const createEnrolledCourse = catchAsync(async (req, res) => {
   });
 });
 
-export { createEnrolledCourse };
+const updateEnrolledCourseMarks = catchAsync(async (req, res) => {
+  const facultyId = req.user.userId;
+  const result = await updateEnrolledCourseMarksIntoDB(facultyId, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Marks is updated successfully',
+    data: result,
+  });
+});
+
+export { createEnrolledCourse, updateEnrolledCourseMarks };
