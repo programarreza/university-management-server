@@ -10,6 +10,7 @@ import {
   createAcademicSemesterValidationSchema,
   updateAcademicSemesterValidationSchema,
 } from './academicSemester.validation';
+import auth from '../../middlewares/auth';
 
 const AcademicSemesterRoutes = express.Router();
 
@@ -19,7 +20,7 @@ AcademicSemesterRoutes.post(
   createAcademicSemester,
 );
 
-AcademicSemesterRoutes.get('/', getAllAcademicSemesters);
+AcademicSemesterRoutes.get('/', auth('admin'), getAllAcademicSemesters);
 AcademicSemesterRoutes.get('/:semesterId', getSingleAcademicSemester);
 AcademicSemesterRoutes.patch(
   '/:semesterId',
