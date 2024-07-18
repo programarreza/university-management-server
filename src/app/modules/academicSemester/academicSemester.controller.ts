@@ -22,7 +22,7 @@ const createAcademicSemester = catchAsync(async (req, res) => {
 
 const getAllAcademicSemesters = catchAsync(async (req, res) => {
   // will cal service func to send this data
-  const result = await getAllAcademicSemestersFromDB();
+  const result = await getAllAcademicSemestersFromDB(req.query);
 
   sendResponse(res, {
     success: true,
