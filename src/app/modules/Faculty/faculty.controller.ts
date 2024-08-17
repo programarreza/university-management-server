@@ -9,14 +9,14 @@ import {
 } from './faculty.service';
 
 const getAllFaculties = catchAsync(async (req, res) => {
-  
   const result = await getAllFacultiesFromDB(req.query);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Faculties are retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 
