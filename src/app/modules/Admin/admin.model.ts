@@ -92,13 +92,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
 
 // generating full name
 adminSchema.virtual('fullName').get(function () {
-  return (
-    this?.name?.firstName +
-    '' +
-    this?.name?.middleName +
-    '' +
-    this?.name?.lastName
-  );
+  return `${this?.name?.firstName || ''} ${this?.name?.middleName || ''} ${this?.name?.lastName || ''}`.trim();
 });
 
 // filter out deleted documents

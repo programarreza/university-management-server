@@ -32,6 +32,7 @@ export const sendImageToCloudinary = async (
     return uploadResult;
   } catch (error) {
     console.log(error);
+    return {}
   }
 };
 

@@ -79,8 +79,9 @@ const updateStudentValidationSchema = z.object({
       dateOfBirth: z.string().optional(),
       email: z.string().email().optional(),
       contactNo: z.string().optional(),
+      profileImg: z.string(),
       emergencyContactNo: z.string().optional(),
-      bloogGroup: z
+      bloodGroup: z
         .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
         .optional(),
       presentAddress: z.string().optional(),

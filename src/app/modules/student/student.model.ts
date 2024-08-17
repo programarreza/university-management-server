@@ -125,19 +125,26 @@ const studentSchema = new Schema<TStudent>(
       default: false,
     },
   },
-  { timestamps: true },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  },
 );
 
-studentSchema.pre('save', async function (next) {
+//virtual
+studentSchema.virtual('fullName').get(function () {
+  return `${this?.name?.firstName || ''} ${this?.name?.middleName || ''} ${this?.name?.lastName || ''}`.trim();
+});
 
-  const isStudentExist = await Student.findOne({ email: this.email }); 
+studentSchema.pre('save', async function (next) {
+  const isStudentExist = await Student.findOne({ email: this.email });
   if (isStudentExist) {
     throw new AppError(httpStatus.NOT_EXTENDED, 'Student Already Exist');
   }
 
-  next()
-
-})
+  next();
+});
 
 studentSchema.pre('find', async function (next) {
   this.find({ isDeleted: { $ne: true } });
@@ -149,7 +156,9 @@ studentSchema.pre('findOne', async function (next) {
   next();
 });
 
-
-
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
 
 export const Student = model('Student', studentSchema);
