@@ -15,7 +15,8 @@ const getAllAdmins = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Admins are retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 
@@ -34,7 +35,7 @@ const getSingleAdmin = catchAsync(async (req, res) => {
 const updateAdmin = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { admin } = req.body;
-  
+
   const result = await updateAdminIntoDB(id, admin);
 
   sendResponse(res, {
