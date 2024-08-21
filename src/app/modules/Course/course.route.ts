@@ -5,6 +5,7 @@ import {
   createCourse,
   deleteCourse,
   getAllCourses,
+  getFacultiesWithCourse,
   getSingleCourse,
   removeFacultyFromCourse,
   updateCourse,
@@ -15,6 +16,7 @@ import {
   updateCourseValidationSchema,
 } from './course.validation';
 import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../user/user.constant';
 
 const courseRoutes = express.Router();
 
@@ -42,6 +44,17 @@ courseRoutes.put(
   auth('admin'),
   validateRequest(facultyWithCourseValidationSchema),
   assignFacultyWithCourse,
+);
+
+courseRoutes.get(
+  '/:courseId/get-faculties',
+  auth(
+    // USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.faculty,
+    USER_ROLE.student,
+  ),
+  getFacultiesWithCourse,
 );
 
 courseRoutes.delete(
